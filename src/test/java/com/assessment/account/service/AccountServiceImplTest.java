@@ -67,4 +67,13 @@ public class AccountServiceImplTest {
         AccountEntity accountEntity = new AccountEntity(null, "John", "Doe", "1234");
         verify(accountRepository).save(accountEntity);
     }
+
+    @Test
+    public void shouldRemoveAccount_whenAccountExists() {
+
+        String accountStatus = accountService.removeAccount(1);
+
+        assertThat(accountStatus).isNotBlank();
+        assertThat(accountStatus).isEqualTo("account successfully deleted");
+    }
 }
