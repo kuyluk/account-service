@@ -1,12 +1,13 @@
 package com.assessment.account.controller;
 
 import com.assessment.account.model.Account;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.assessment.account.service.AccountService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -16,12 +17,16 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountControllerTest {
 
     private MockMvc mockMvc;
+
+    @Mock
+    private AccountService accountService;
 
     @InjectMocks
     private AccountController controller;
@@ -37,6 +42,8 @@ public class AccountControllerTest {
         List<Account> accounts = new ArrayList<>();
         accounts.add(anAccount(1, "John", "Doe", "1234"));
 
+        when(accountService.retrieveAllAccounts()).thenReturn(accounts);
+
         String expectedJson = new ObjectMapper().writeValueAsString(accounts);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/accounts"))
@@ -44,6 +51,9 @@ public class AccountControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(content().string(expectedJson))
                 ;
+
+        verify(accountService).retrieveAllAccounts();
+
     }
 
 
