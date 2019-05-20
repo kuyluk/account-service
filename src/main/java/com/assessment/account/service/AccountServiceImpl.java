@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -34,4 +33,11 @@ public class AccountServiceImpl implements AccountService {
         accountRepository.save(accountEntity);
         return AccountStatus.CREATED.getMessage();
     }
+
+    @Override
+    public String removeAccount(Integer accountId) {
+        throw new RuntimeException("not implemented yet.");
+    }
+
+
 }

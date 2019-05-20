@@ -87,11 +87,16 @@ public class AccountControllerTest {
     @Test
     public void shouldRemoveAccount_whenAccountExists() throws Exception {
 
+        String message = "account successfully deleted";
+        when(accountService.removeAccount(anyInt())).thenReturn(message);
+
         mockMvc.perform(delete("/accounts/1"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().string(toJson(new ResponseMessage("account successfully deleted"))))
+                .andExpect(content().string(toJson(new ResponseMessage(message))))
                 ;
+
+        verify(accountService).removeAccount(1);
     }
 
     private <T> String toJson(T object) throws JsonProcessingException {

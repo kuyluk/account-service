@@ -9,4 +9,6 @@ public interface AccountService {
     List<Account> retrieveAllAccounts();
 
     String addAccount(Account account);
+
+    String removeAccount(Integer accountId);
 }
