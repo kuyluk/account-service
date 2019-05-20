@@ -54,9 +54,17 @@ public class AccountServiceImplTest {
     @Test
     public void shouldAddNewAccount_whenAccountIsValid() {
 
+        AccountEntity savedAccountEntity = new AccountEntity(123, "John", "Doe", "1234");
+        when(accountRepository.save(any(AccountEntity.class))).thenReturn(savedAccountEntity);
+
         Account account = new Account(null, "John", "Doe", "1234");
+
         String accountStatus = accountService.addAccount(account);
 
         assertThat(accountStatus).isNotBlank();
+        assertThat(accountStatus).isEqualTo("account has been successfully added");
+
+        AccountEntity accountEntity = new AccountEntity(null, "John", "Doe", "1234");
+        verify(accountRepository).save(accountEntity);
     }
 }
