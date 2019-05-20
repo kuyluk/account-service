@@ -1,21 +1,29 @@
-package com.assessment.account.model;
+package com.assessment.account.entity;
 
-import java.util.Objects;
+import javax.persistence.*;
 
-public class Account {
+@Entity
+@Table(name = "accounts")
+public class AccountEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer id;
 
+    @Column(name = "first_name")
     private String firstName;
 
+    @Column(name = "second_name")
     private String secondName;
 
+    @Column(name = "account_number")
     private String accountNumber;
 
-    public Account() {
+    public AccountEntity() {
     }
 
-    public Account(Integer id, String firstName, String secondName, String accountNumber) {
+    public AccountEntity(Integer id, String firstName, String secondName, String accountNumber) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
@@ -52,21 +60,5 @@ public class Account {
 
     public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Account account = (Account) o;
-        return Objects.equals(id, account.id) &&
-                Objects.equals(firstName, account.firstName) &&
-                Objects.equals(secondName, account.secondName) &&
-                Objects.equals(accountNumber, account.accountNumber);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, secondName, accountNumber);
     }
 }

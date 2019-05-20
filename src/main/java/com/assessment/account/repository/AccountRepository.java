@@ -1,10 +1,10 @@
 package com.assessment.account.repository;
 
-import com.assessment.account.model.Account;
+import com.assessment.account.entity.AccountEntity;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
+@Component
+public interface AccountRepository extends CrudRepository<AccountEntity, Integer> {
 
-public interface AccountRepository {
-
-    List<Account> retrieveAccounts();
 }

@@ -1,5 +1,6 @@
 package com.assessment.account.service;
 
+import com.assessment.account.entity.AccountEntity;
 import com.assessment.account.model.Account;
 import com.assessment.account.repository.AccountRepository;
 import org.junit.Before;
@@ -35,7 +36,11 @@ public class AccountServiceImplTest {
                 new Account(2, "Jane", "Doe", "1235"),
                 new Account(3, "Jim", "Taylor", "1236"));
 
-        when(accountRepository.retrieveAccounts()).thenReturn(expectedAccounts);
+        List<AccountEntity> accountEntities = Arrays.asList(new AccountEntity(1, "John", "Doe", "1234"),
+                new AccountEntity(2, "Jane", "Doe", "1235"),
+                new AccountEntity(3, "Jim", "Taylor", "1236"));
+
+        when(accountRepository.findAll()).thenReturn(accountEntities);
 
         List<Account> accounts = accountService.retrieveAllAccounts();
 
@@ -43,6 +48,6 @@ public class AccountServiceImplTest {
         assertThat(accounts).hasSize(3);
         assertThat(accounts).hasSameElementsAs(expectedAccounts);
 
-        verify(accountRepository).retrieveAccounts();
+        verify(accountRepository).findAll();
     }
 }
