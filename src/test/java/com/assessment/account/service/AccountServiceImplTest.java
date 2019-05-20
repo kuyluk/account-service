@@ -50,4 +50,13 @@ public class AccountServiceImplTest {
 
         verify(accountRepository).findAll();
     }
+
+    @Test
+    public void shouldAddNewAccount_whenAccountIsValid() {
+
+        Account account = new Account(null, "John", "Doe", "1234");
+        String accountStatus = accountService.addAccount(account);
+
+        assertThat(accountStatus).isNotBlank();
+    }
 }
