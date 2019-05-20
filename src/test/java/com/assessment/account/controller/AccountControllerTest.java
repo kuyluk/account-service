@@ -3,6 +3,8 @@ package com.assessment.account.controller;
 import com.assessment.account.model.Account;
 import com.assessment.account.model.ResponseMessage;
 import com.assessment.account.service.AccountService;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +14,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
@@ -33,9 +34,13 @@ public class AccountControllerTest {
     @InjectMocks
     private AccountController controller;
 
+    private ObjectMapper objectMapper;
+
     @Before
     public void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
     @Test
@@ -46,7 +51,7 @@ public class AccountControllerTest {
 
         when(accountService.retrieveAllAccounts()).thenReturn(accounts);
 
-        String expectedJson = new ObjectMapper().writeValueAsString(accounts);
+        String expectedJson = toJson(accounts);
 
         mockMvc.perform(get("/accounts"))
                 .andExpect(status().is2xxSuccessful())
@@ -61,11 +66,10 @@ public class AccountControllerTest {
     @Test
     public void shouldAddAnAccount_whenRequestBodyIsValid() throws Exception {
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        Account account = anAccount(1, "John", "Doe", "1234");
-        String requestBody = objectMapper.writeValueAsString(account);
+        Account account = anAccount(null, "John", "Doe", "1234");
+        String requestBody = toJson(account);
         String responseMessage = "account has been successfully added";
-        String responseBody = objectMapper.writeValueAsString(new ResponseMessage(responseMessage));
+        String responseBody = toJson(new ResponseMessage(responseMessage));
 
         when(accountService.addAccount(any(Account.class))).thenReturn(responseMessage);
 
@@ -73,13 +77,18 @@ public class AccountControllerTest {
                     .content(requestBody)
                     .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().is2xxSuccessful())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(content().string(responseBody))
                 ;
 
         verify(accountService).addAccount(account);
     }
 
-    private Account anAccount(int id, String firstName, String secondName, String accountNumber){
+    private <T> String toJson(T object) throws JsonProcessingException {
+        return objectMapper.writeValueAsString(object);
+    }
+
+    private Account anAccount(Integer id, String firstName, String secondName, String accountNumber){
         return new Account(id, firstName, secondName, accountNumber);
     }
 }
