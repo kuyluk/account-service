@@ -27,6 +27,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public String addAccount(Account account) {
-        throw new RuntimeException("Not implemented yet.");
+        return "account has been successfully added";
     }
 }
