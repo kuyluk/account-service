@@ -75,5 +75,7 @@ public class AccountServiceImplTest {
 
         assertThat(accountStatus).isNotBlank();
         assertThat(accountStatus).isEqualTo("account successfully deleted");
+
+        verify(accountRepository).deleteById(1);
     }
 }
