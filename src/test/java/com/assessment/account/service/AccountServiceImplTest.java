@@ -28,5 +28,9 @@ public class AccountServiceImplTest {
         List<Account> accounts = accountService.retrieveAllAccounts();
 
         assertThat(accounts).isNotNull();
+        assertThat(accounts).hasSize(3);
+        assertThat(accounts).contains(new Account(1, "John", "Doe", "1234"),
+                new Account(2, "Jane", "Doe", "1235"),
+                new Account(3, "Jim", "Taylor", "1236"));
     }
 }
