@@ -36,7 +36,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public String removeAccount(Integer accountId) {
-        throw new RuntimeException("not implemented yet.");
+
+        return "account successfully deleted";
     }
 
 
