@@ -62,15 +62,21 @@ public class AccountControllerTest {
     public void shouldAddAnAccount_whenRequestBodyIsValid() throws Exception {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String requestBody = objectMapper.writeValueAsString(anAccount(1, "John", "Doe", "1234"));
-        String responseMessage = objectMapper.writeValueAsString(new ResponseMessage("account has been successfully added"));
+        Account account = anAccount(1, "John", "Doe", "1234");
+        String requestBody = objectMapper.writeValueAsString(account);
+        String responseMessage = "account has been successfully added";
+        String responseBody = objectMapper.writeValueAsString(new ResponseMessage(responseMessage));
+
+        when(accountService.addAccount(any(Account.class))).thenReturn(responseMessage);
 
         mockMvc.perform(post("/accounts")
                     .content(requestBody)
                     .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(content().string(responseMessage))
+                .andExpect(content().string(responseBody))
                 ;
+
+        verify(accountService).addAccount(account);
     }
 
     private Account anAccount(int id, String firstName, String secondName, String accountNumber){

@@ -7,4 +7,6 @@ import java.util.List;
 public interface AccountService {
 
     List<Account> retrieveAllAccounts();
+
+    String addAccount(Account account);
 }

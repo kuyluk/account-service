@@ -24,4 +24,9 @@ public class AccountServiceImpl implements AccountService {
         accountEntities.forEach(ae -> accounts.add(new Account(ae.getId(), ae.getFirstName(), ae.getSecondName(), ae.getAccountNumber())));
         return accounts;
     }
+
+    @Override
+    public String addAccount(Account account) {
+        throw new RuntimeException("Not implemented yet.");
+    }
 }
