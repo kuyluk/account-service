@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -46,7 +47,7 @@ public class AccountControllerTest {
 
         String expectedJson = new ObjectMapper().writeValueAsString(accounts);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/accounts"))
+        mockMvc.perform(get("/accounts"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(content().string(expectedJson))
@@ -56,6 +57,16 @@ public class AccountControllerTest {
 
     }
 
+    @Test
+    public void shouldAddAnAccount_whenRequestBodyIsValid() throws Exception {
+
+        String requestBody = new ObjectMapper().writeValueAsString(anAccount(1, "John", "Doe", "1234"));
+
+        mockMvc.perform(post("/accounts")
+                    .content(requestBody)
+                    .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().is2xxSuccessful());
+    }
 
     private Account anAccount(int id, String firstName, String secondName, String accountNumber){
         return new Account(id, firstName, secondName, accountNumber);
