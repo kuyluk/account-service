@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -27,6 +28,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public String addAccount(Account account) {
+
+        AccountEntity accountEntity = new AccountEntity(null, account.getFirstName(), account.getSecondName(), account.getAccountNumber());
+        accountRepository.save(accountEntity);
         return "account has been successfully added";
     }
 }
