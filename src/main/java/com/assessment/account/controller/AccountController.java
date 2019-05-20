@@ -1,6 +1,7 @@
 package com.assessment.account.controller;
 
 import com.assessment.account.model.Account;
+import com.assessment.account.model.ResponseMessage;
 import com.assessment.account.service.AccountService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,8 +27,8 @@ public class AccountController {
     }
 
     @PostMapping(value = "/accounts", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public void addAccount(@RequestBody Account account){
-
+    public ResponseMessage addAccount(@RequestBody Account account){
+        return new ResponseMessage("account has been successfully added");
     }
 
 }
