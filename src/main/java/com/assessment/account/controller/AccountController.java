@@ -28,7 +28,9 @@ public class AccountController {
 
     @PostMapping(value = "/accounts", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseMessage addAccount(@RequestBody Account account){
-        return new ResponseMessage("account has been successfully added");
+
+        String message = accountService.addAccount(account);
+        return new ResponseMessage(message);
     }
 
 }
