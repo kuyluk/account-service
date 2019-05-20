@@ -84,6 +84,16 @@ public class AccountControllerTest {
         verify(accountService).addAccount(account);
     }
 
+    @Test
+    public void shouldRemoveAccount_whenAccountExists() throws Exception {
+
+        mockMvc.perform(delete("/accounts/1"))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().string(toJson(new ResponseMessage("account successfully deleted"))))
+                ;
+    }
+
     private <T> String toJson(T object) throws JsonProcessingException {
         return objectMapper.writeValueAsString(object);
     }
