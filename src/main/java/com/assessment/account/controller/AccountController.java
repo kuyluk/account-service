@@ -33,7 +33,8 @@ public class AccountController {
     @DeleteMapping(value = "/accounts/{id}")
     public ResponseMessage removeAccount(@PathVariable Integer id){
 
-        return new ResponseMessage("account successfully deleted");
+        String message = accountService.removeAccount(id);
+        return new ResponseMessage(message);
     }
 
 }
