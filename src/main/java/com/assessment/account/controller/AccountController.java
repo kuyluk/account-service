@@ -4,6 +4,8 @@ import com.assessment.account.model.Account;
 import com.assessment.account.service.AccountService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -17,10 +19,15 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @GetMapping(value = "accounts", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/accounts", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<Account> retrieveAllAccounts(){
 
         return accountService.retrieveAllAccounts();
+    }
+
+    @PostMapping(value = "/accounts", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public void addAccount(@RequestBody Account account){
+
     }
 
 }
