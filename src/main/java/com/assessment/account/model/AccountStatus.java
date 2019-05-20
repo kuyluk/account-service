@@ -2,7 +2,9 @@ package com.assessment.account.model;
 
 public enum AccountStatus {
 
-    CREATED("account has been successfully added");
+    CREATED("account has been successfully added"),
+    DELETED("account successfully deleted")
+    ;
 
     private String message;
 

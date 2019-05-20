@@ -37,7 +37,8 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public String removeAccount(Integer accountId) {
 
-        return "account successfully deleted";
+        accountRepository.deleteById(accountId);
+        return AccountStatus.DELETED.getMessage();
     }
 
 
