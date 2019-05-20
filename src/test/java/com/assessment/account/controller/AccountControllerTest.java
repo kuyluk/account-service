@@ -1,6 +1,7 @@
 package com.assessment.account.controller;
 
 import com.assessment.account.model.Account;
+import com.assessment.account.model.ResponseMessage;
 import com.assessment.account.service.AccountService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
@@ -60,12 +61,16 @@ public class AccountControllerTest {
     @Test
     public void shouldAddAnAccount_whenRequestBodyIsValid() throws Exception {
 
-        String requestBody = new ObjectMapper().writeValueAsString(anAccount(1, "John", "Doe", "1234"));
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestBody = objectMapper.writeValueAsString(anAccount(1, "John", "Doe", "1234"));
+        String responseMessage = objectMapper.writeValueAsString(new ResponseMessage("account has been successfully added"));
 
         mockMvc.perform(post("/accounts")
                     .content(requestBody)
                     .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().is2xxSuccessful());
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(content().string(responseMessage))
+                ;
     }
 
     private Account anAccount(int id, String firstName, String secondName, String accountNumber){
