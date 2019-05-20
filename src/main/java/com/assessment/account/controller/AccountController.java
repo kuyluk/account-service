@@ -4,10 +4,7 @@ import com.assessment.account.model.Account;
 import com.assessment.account.model.ResponseMessage;
 import com.assessment.account.service.AccountService;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,6 +28,12 @@ public class AccountController {
 
         String message = accountService.addAccount(account);
         return new ResponseMessage(message);
+    }
+
+    @DeleteMapping(value = "/accounts/{id}")
+    public ResponseMessage removeAccount(@PathVariable Integer id){
+
+        return new ResponseMessage("account successfully deleted");
     }
 
 }
