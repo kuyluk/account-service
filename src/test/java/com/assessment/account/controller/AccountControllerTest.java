@@ -53,7 +53,7 @@ public class AccountControllerTest {
 
         String expectedJson = toJson(accounts);
 
-        mockMvc.perform(get("/accounts"))
+        mockMvc.perform(get("/rest/account/json"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(content().string(expectedJson))
@@ -73,7 +73,7 @@ public class AccountControllerTest {
 
         when(accountService.addAccount(any(Account.class))).thenReturn(responseMessage);
 
-        mockMvc.perform(post("/accounts")
+        mockMvc.perform(post("/rest/account/json")
                     .content(requestBody)
                     .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().is2xxSuccessful())
@@ -90,7 +90,7 @@ public class AccountControllerTest {
         String message = "account successfully deleted";
         when(accountService.removeAccount(anyInt())).thenReturn(message);
 
-        mockMvc.perform(delete("/accounts/1"))
+        mockMvc.perform(delete("/rest/account/json/1"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(content().string(toJson(new ResponseMessage(message))))

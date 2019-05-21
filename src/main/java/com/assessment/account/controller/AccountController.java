@@ -11,26 +11,28 @@ import java.util.List;
 @RestController
 public class AccountController {
 
+    private final static String ACCOUNTS_ENDPOINT = "/rest/account/json";
+
     private final AccountService accountService;
 
     public AccountController(AccountService accountService) {
         this.accountService = accountService;
     }
 
-    @GetMapping(value = "/accounts", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = ACCOUNTS_ENDPOINT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<Account> retrieveAllAccounts(){
 
         return accountService.retrieveAllAccounts();
     }
 
-    @PostMapping(value = "/accounts", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = ACCOUNTS_ENDPOINT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseMessage addAccount(@RequestBody Account account){
 
         String message = accountService.addAccount(account);
         return new ResponseMessage(message);
     }
 
-    @DeleteMapping(value = "/accounts/{id}")
+    @DeleteMapping(value = ACCOUNTS_ENDPOINT + "/{id}")
     public ResponseMessage removeAccount(@PathVariable Integer id){
 
         String message = accountService.removeAccount(id);
